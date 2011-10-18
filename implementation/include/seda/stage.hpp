@@ -11,13 +11,13 @@ namespace sf
 namespace seda
 {
 
-typedef boost::shared_ptr< sf::utility::Threadpool<> > ThreadPoolPtr;
+typedef boost::shared_ptr<sf::utility::Threadpool<>> ThreadPoolPtr;
 typedef boost::shared_ptr<sf::seda::Event> EventPtr;
 
-class Stage
+class Stage : boost::noncopyable
 {
 public:
-	Stage(size_t psize)
+	explicit Stage(size_t psize)
 	:poolSize(psize)
 	{}
 
@@ -41,6 +41,9 @@ public:
 	{
 		threadpool->schedule(boost::bind(&Stage::eventHandler, this, e));
 	}
+
+	virtual ~Stage()
+	{}
 
 protected:
 	virtual void eventHandler(EventPtr e) = 0;

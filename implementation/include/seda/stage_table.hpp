@@ -56,4 +56,4 @@ private:
 }
 }
 
-#endif
+#endif SF_SEDA_STAGE_TABLE_HPP

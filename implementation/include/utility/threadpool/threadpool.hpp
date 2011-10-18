@@ -19,9 +19,9 @@ template <class T = nullaryFunctor>
 class Threadpool
 {
 public:
-	Threadpool(int poolSize)
+	Threadpool(unsigned char poolSize)
 	{
-		for(int i = 0; i < poolSize; ++i)
+		for(unsigned char i = 0; i < poolSize; ++i)
 		{
 			threadPtr t(new boost::thread(&Threadpool::run, this));
 			wthreads.push_back(t);
@@ -72,7 +72,12 @@ private:
 		while(1)
 		{
 			queue.pop(task);
-			task();
+			try
+			{
+				task();
+			}
+			catch(...)
+			{} //swallow!
 		}
 	}
 

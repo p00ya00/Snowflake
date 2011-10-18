@@ -8,7 +8,7 @@ namespace sf
 namespace seda
 {
 
-class SedaApp
+class SedaApp : boost::noncopyable
 {
 public:
 	void run()
@@ -39,6 +39,9 @@ public:
 			(*itr)->stop();
 		}
 	}
+
+	virtual ~SedaApp()
+	{}
 
 protected:
 	virtual void initialize() = 0;

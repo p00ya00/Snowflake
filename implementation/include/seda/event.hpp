@@ -1,15 +1,17 @@
 #ifndef SF_SEDA_EVENT_HPP
 #define SF_SEDA_EVENT_HPP
 
+#include <boost/utility.hpp>
+
 namespace sf
 {
 namespace seda
 {
 
-class Event
+class Event : boost::noncopyable
 {
 public:
-	Event(unsigned short t)
+	explicit Event(unsigned short t)
 	:type(t)
 	{}
 
@@ -17,6 +19,9 @@ public:
 	{
 		return type;
 	}
+
+	virtual ~Event()
+	{}
 	
 private:
 	unsigned short type;
