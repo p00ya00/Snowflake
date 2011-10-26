@@ -4,7 +4,9 @@
 #include <utility/threadpool.hpp>
 #include <seda/event.hpp>
 #include <seda/stage_table.hpp>
+#include <seda/exception.hpp>
 #include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
 
 namespace sf
 {
@@ -51,8 +53,11 @@ protected:
 	void enqueue(unsigned short s, EventPtr e)
 	{
 		StagePtr stage = stageTable.find(s);
-		if(stage != NULL)
-			stage->enqueue(e);
+		if(stage == NULL)
+			throw InvalidStageException()
+				 << errorMessage("There is no stage " + 
+					boost::lexical_cast<std::string>(s) + "in the stage table");
+		stage->enqueue(e);
 	}
 
 private:
