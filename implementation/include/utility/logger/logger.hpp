@@ -1,12 +1,13 @@
 #ifndef SF_LOGGER_HPP
 #define SF_LOGGER_HPP
 
-#include <string>
 #include <sstream>
 #include <stdio.h>
 #include <stdarg.h>
-#include <boost/exception/all.hpp>
+#include <utility/logger/exception.hpp>
 #include <boost/utility.hpp>
+//using boost::noncopyable
+
 #include <boost/date_time.hpp>
 namespace pt = boost::posix_time;
 
@@ -14,17 +15,6 @@ namespace sf
 {
 namespace utility
 {
-
-////////////////////// Exception Definition //////////////////////
-
-typedef boost::error_info<struct tag_error_msg , std::string  > errorMessage;
-
-struct InvalidLogException: 
-	virtual public std::exception, 
-	virtual public boost::exception 
-{};
-
-/////////////////////////////////////////////////////////////////////
 
 class Logger : boost::noncopyable
 {
