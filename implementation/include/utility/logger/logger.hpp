@@ -5,8 +5,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <utility/logger/exception.hpp>
-#include <boost/utility.hpp>
-//using boost::noncopyable
+#include <boost/noncopyable.hpp>
 
 #include <boost/date_time.hpp>
 namespace pt = boost::posix_time;
