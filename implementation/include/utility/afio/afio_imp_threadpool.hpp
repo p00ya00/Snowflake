@@ -10,7 +10,7 @@ namespace sf
 namespace afio
 {
 
-class AfioImpThreadpool : AfioImp
+class AfioImpThreadpool : public AfioImp
 {
 	public:
 	AfioImpThreadpool(const std::string &path, const FileOpenMode mode);

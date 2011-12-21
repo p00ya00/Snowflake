@@ -19,7 +19,7 @@ namespace afio
 
 typedef boost::shared_ptr<io_service> IoServicePtr;
 
-class AfioImpOverlappedIo : AfioImp
+class AfioImpOverlappedIo : public AfioImp
 {
 public:
 	AfioImpOverlappedIo(const std::string &path, const FileOpenMode mode);

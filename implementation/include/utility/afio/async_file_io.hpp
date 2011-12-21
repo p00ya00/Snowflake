@@ -12,7 +12,7 @@ namespace sf
 namespace afio
 {
 
-class AsyncFileIn : AsyncFileBase
+class AsyncFileIn : virtual public AsyncFileBase
 {
 public:
 	AsyncFileIn(const std::string &path, const FileOpenMode mode);
@@ -22,13 +22,9 @@ public:
 
 	void asyncRead(const mutable_buffers_1 &buff, ReadHandler handler,
 	               boost::uint64_t sizeToRead, boost::uint64_t offset);
-
-protected:
-	AsyncFileIn()
-	{}
 };
 
-class AsyncFileOut : AsyncFileBase
+class AsyncFileOut : virtual public AsyncFileBase
 {
 public:
 	AsyncFileOut(const std::string &path, const FileOpenMode mode);
@@ -38,13 +34,9 @@ public:
 
 	void asyncWrite(const const_buffers_1 &buff, ReadHandler handler,
                     boost::uint64_t sizeToWrite, boost::uint64_t offset);
-
-protected:
-	AsyncFileOut()
-	{}
 };
 
-class AsyncFileInOut : virtual AsyncFileIn, virtual AsyncFileOut
+class AsyncFileInOut : public AsyncFileIn, public AsyncFileOut
 {
 public:
 	AsyncFileInOut(const std::string &path, const FileOpenMode mode);

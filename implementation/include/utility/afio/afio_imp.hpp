@@ -12,7 +12,7 @@ namespace sf
 namespace afio
 {
 
-class AfioImp : boost::noncopyable
+class AfioImp : private boost::noncopyable
 {
 public:
 	AfioImp(const std::string &path, const FileOpenMode mode)

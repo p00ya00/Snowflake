@@ -10,6 +10,7 @@
 #include <boost/asio/streambuf.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/bind.hpp>
 #include <boost/assert.hpp>
 
@@ -38,6 +39,9 @@ namespace sf
 namespace afio
 {
 
+class AfioImp;
+typedef boost::scoped_ptr<AfioImp> AfioImpPtr;
+
 enum FileOpenMode 
 {
 	READ_M = 1,
@@ -46,7 +50,6 @@ enum FileOpenMode
 	READ_WRITE_M,      // appended writing
 	READ_WRITE_TRUNC_M // truncate file
 };
-
 
 //defining a type which will be able to store boost::bind results
 //as functor with the same signature as boost::asio read/write handlers
