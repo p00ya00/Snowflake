@@ -1,5 +1,6 @@
 #include <utility/afio/async_file_base.hpp>
 #include <utility/afio/afio_imp.hpp>
+#include <utility/afio/afio_imp_factory.hpp>
 using namespace sf::afio;
 
 AsyncFileBase::AsyncFileBase(const std::string &path, const FileOpenMode mode)
@@ -31,4 +32,9 @@ inline void AsyncFileBase::cancel()
 inline void AsyncFileBase::close()
 {
 	pImp->close();
+}
+
+AfioImp *AsyncFileBase::getAfioImp(const std::string &path, const FileOpenMode mode)
+{
+	return createAfioImp(path, mode);
 }
