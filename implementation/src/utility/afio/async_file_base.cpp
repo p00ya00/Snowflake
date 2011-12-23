@@ -6,7 +6,12 @@ using namespace sf::afio;
 AsyncFileBase::AsyncFileBase(const std::string &path, const FileOpenMode mode)
 : pImp(getAfioImp(path, mode))
 {
-	BOOST_ASSERT(pImp != NULL);
+	if(pImp == NULL)
+	{
+		//Could not get an implementation
+		throw error::UnableToStartAfio()
+		      << error::errorMessage("Cannot get an implementation");
+	}
 }
 
 inline std::string AsyncFileBase::path() const
@@ -36,5 +41,6 @@ inline void AsyncFileBase::close()
 
 AfioImp *AsyncFileBase::getAfioImp(const std::string &path, const FileOpenMode mode)
 {
+	//Call a factory function to get an implementation
 	return createAfioImp(path, mode);
 }

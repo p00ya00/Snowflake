@@ -12,6 +12,8 @@ namespace sf
 namespace afio
 {
 
+// A base class for different implementations 
+// of asynchronous file io
 class AfioImp : private boost::noncopyable
 {
 public:
@@ -28,8 +30,12 @@ public:
 
 	virtual bool isOpen() const = 0;
 
+	//Cancel all async io operations on this file and
+	//call read/write handlers with 'operation_aborted'
 	virtual void cancel() = 0;
 
+	//Cancel all async io operations on this file, close the file
+	//and call read/write handlers with 'operation_aborted'
 	virtual void close() = 0;
 
 	virtual ~AfioImp()

@@ -1,6 +1,11 @@
 #include <utility/afio/afio_imp_overlapped_io.hpp>
 using namespace sf::afio;
 
+#include <iostream>
+#include <io.h>
+
+namespace asio_error = boost::asio::error;
+
 struct AfioImpOverlappedIo::IoServiceInitializer
 {
 	IoServiceInitializer()
@@ -85,7 +90,25 @@ void AfioImpOverlappedIo::cancel()
 	}
 	catch(boost::system::system_error &error)
 	{
-		//error in cancellation
+		if(error.code() == asio_error::bad_descriptor)
+		{
+			//The random access handle does not point
+			//to a valid open file HANDLE
+			throw error::CancellationFailure()
+			      << error::errorMessage("Invalid file handle");
+		}
+		else if(error.code() == asio_error::operation_not_supported)
+		{
+			//Async operations have been started from more than
+			//one thread on the same random access handle
+			//Incomplete operations cannot be canceled safely
+			throw error::CancellationFailure()
+			      << error::errorMessage("Multiple threads using file handle");
+		}
+		else
+		{
+			throw error::CancellationFailure() << error::errorMessage(error.what());
+		}
 	}
 }
 
@@ -98,6 +121,7 @@ void AfioImpOverlappedIo::close()
 	catch(boost::system::system_error &error)
 	{
 		//error in closing the handle
+		std::cerr << "Error while closing the handle. " << error.what() << std::endl;
 	}
 }
 
@@ -125,7 +149,8 @@ void AfioImpOverlappedIo::asyncRead(const mutable_buffers_1 &buff, ReadHandler h
 	else //sizeToRead > 0
 	{
 		boost::asio::async_read_at(randomAccessHandle, offset, buff, 
-                                   transfer_at_least(sizeToRead), handler);
+                                   transfer_at_least(static_cast<std::size_t>(sizeToRead)),
+		                           handler);
 	}
 }
 
@@ -153,7 +178,8 @@ void AfioImpOverlappedIo::asyncWrite(const const_buffers_1 &buff, ReadHandler ha
 	else //sizeToRead > 0
 	{
 		boost::asio::async_write_at(randomAccessHandle, offset, buff, 
-                                   transfer_at_least(sizeToWrite), handler);
+                                    transfer_at_least(static_cast<std::size_t>(sizeToWrite)),
+		                            handler);
 	}
 }
 

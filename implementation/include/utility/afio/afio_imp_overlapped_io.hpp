@@ -5,6 +5,7 @@
 
 #ifdef  SF_AFIO_USES_OVERLAPPED_IO
 
+#include <fstream>
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/windows/random_access_handle.hpp>
 #include <boost/asio/read_at.hpp>
@@ -19,6 +20,8 @@ namespace afio
 
 typedef boost::shared_ptr<io_service> IoServicePtr;
 
+//Implementation of async file io using windows
+//overlapped io with boost::asio
 class AfioImpOverlappedIo : public AfioImp
 {
 public:
@@ -28,6 +31,7 @@ public:
 
 	virtual bool isOpen() const;
 
+	//Throws CancellationFailure
 	virtual void cancel();
 
 	virtual void close();
@@ -54,22 +58,28 @@ public:
                              boost::uint64_t offset
                            );
 
+	std::fstream  &getFileStream() const;
+
 	virtual ~AfioImpOverlappedIo();
 
 private:
-
+	//Native windows handle for the file
 	HANDLE fileHandle;
 
+	//boost::asio wrappers around the windows HANDLE
+	//to add async file io operations
 	windows::random_access_handle randomAccessHandle;
 	
-	struct IoServiceInitializer;
-
 	static io_service ioService;
 
 	static io_service::work work;
 
+	//io_service worker threads
 	static boost::thread_group workerThreads;
 
+	//workaround for static constructors and destructors
+	//in C++ to start and stop the io_service and worker threads
+	struct IoServiceInitializer;
 	static IoServiceInitializer iosInitializer;
 };
 

@@ -12,7 +12,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/bind.hpp>
-#include <boost/assert.hpp>
+//#include <boost/assert.hpp>
+#include <utility/afio/afio_error.hpp>
 
 //number of worker threads used in the
 //implementation, whether in a threadpool
@@ -40,7 +41,7 @@ namespace afio
 {
 
 class AfioImp;
-typedef boost::scoped_ptr<AfioImp> AfioImpPtr;
+typedef boost::shared_ptr<AfioImp> AfioImpPtr;
 
 enum FileOpenMode 
 {
@@ -62,13 +63,13 @@ typedef boost::function2<void,
                          const boost::system::error_code &, 
 						 std::size_t>
         WriteHandler;
-
+/*
 namespace placeholders
 {
-	using boost::asio::placeholders::error;
-	using boost::asio::placeholders::bytes_transferred;
+	typedef boost::asio::placeholders::error error;
+	typedef boost::asio::placeholders::bytes_transferred bytesTransferred;
 }
-
+*/
 }
 }
 

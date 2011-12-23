@@ -10,6 +10,8 @@ namespace sf
 namespace afio
 {
 
+//Implementation of async file io using a pool of worker
+//threads performing blocking io operations
 class AfioImpThreadpool : public AfioImp
 {
 	public:

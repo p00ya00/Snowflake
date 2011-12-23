@@ -9,6 +9,7 @@ namespace sf
 namespace afio
 {
 
+//create an implementation based on the defined macros
 AfioImp *createAfioImp(const std::string &path, const FileOpenMode mode);
 
 }

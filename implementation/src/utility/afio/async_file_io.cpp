@@ -18,6 +18,8 @@ void AsyncFileIn::asyncRead(const mutable_buffers_1 &buff, ReadHandler handler,
 	pImp->asyncRead(buff, handler, sizeToRead, offset);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
 AsyncFileOut::AsyncFileOut(const std::string &path, const FileOpenMode mode)
 : AsyncFileBase(path, mode)
 {}
@@ -33,6 +35,8 @@ void AsyncFileOut::asyncWrite(const const_buffers_1 &buff, ReadHandler handler,
 {
 	pImp->asyncWrite(buff, handler, sizeToWrite, offset);
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 AsyncFileInOut::AsyncFileInOut(const std::string &path, const FileOpenMode mode)
 : AsyncFileBase(path, mode),

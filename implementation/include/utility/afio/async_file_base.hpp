@@ -8,9 +8,15 @@ namespace sf
 namespace afio
 {
 
+//Abstraction of async file io which performs the
+//operations by delegation to the back-end implementation
+//
+//The base defines functions common to in, out
+//and in/out files
 class AsyncFileBase : private boost::noncopyable
 {
 public:
+	//Throws UnableToStartAfio if it cannot get an implementation
 	AsyncFileBase(const std::string &path, const FileOpenMode mode);
 
 	std::string path() const;
@@ -27,6 +33,7 @@ public:
 	{}
 
 protected:
+	//pointer to afio implementation
 	AfioImpPtr pImp;
 
 	AfioImp *getAfioImp(const std::string &path, const FileOpenMode mode);
