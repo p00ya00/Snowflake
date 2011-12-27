@@ -72,8 +72,8 @@ void AfioImpOverlappedIo::open(const std::string &path, const FileOpenMode mode)
 								  creationMode, 
 								  FILE_FLAG_OVERLAPPED | FILE_ATTRIBUTE_NORMAL,
 								  NULL );
-
-		randomAccessHandle.assign(fileHandle);
+		if(fileHandle != INVALID_HANDLE_VALUE)
+			randomAccessHandle.assign(fileHandle);
 	}
 }
 
@@ -136,7 +136,7 @@ void AfioImpOverlappedIo::asyncRead(const mutable_buffers_1 &buff, ReadHandler h
 {
 	using namespace boost::system;
 
-	if(fileHandle == INVALID_HANDLE_VALUE)
+    if(!randomAccessHandle.is_open())
 	{
 		error_code err(errc::no_such_file_or_directory, system_category());
 		handler(err, 0);
@@ -165,7 +165,7 @@ void AfioImpOverlappedIo::asyncWrite(const const_buffers_1 &buff, ReadHandler ha
 {
 	using namespace boost::system;
 
-	if(fileHandle == INVALID_HANDLE_VALUE)
+	if(!randomAccessHandle.is_open())
 	{
 		error_code err(errc::no_such_file_or_directory, system_category());
 		handler(err, 0);
@@ -181,6 +181,16 @@ void AfioImpOverlappedIo::asyncWrite(const const_buffers_1 &buff, ReadHandler ha
                                     transfer_at_least(static_cast<std::size_t>(sizeToWrite)),
 		                            handler);
 	}
+}
+
+void AfioImpOverlappedIo::join()
+{
+	workerThreads.join_all();
+}
+
+void AfioImpOverlappedIo::stop()
+{
+	ioService.stop();
 }
 
 AfioImpOverlappedIo::~AfioImpOverlappedIo()

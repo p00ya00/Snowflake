@@ -47,6 +47,10 @@ class AfioImpThreadpool : public AfioImp
                              boost::uint64_t offset
                            );
 
+	static void join();
+
+	static void stop();
+
 	virtual ~AfioImpThreadpool();
 };
 

@@ -14,27 +14,27 @@ AsyncFileBase::AsyncFileBase(const std::string &path, const FileOpenMode mode)
 	}
 }
 
-inline std::string AsyncFileBase::path() const
+std::string AsyncFileBase::path() const
 {
 	return pImp->path();
 }
 
-inline void AsyncFileBase::open(const std::string &path, const FileOpenMode mode)
+void AsyncFileBase::open(const std::string &path, const FileOpenMode mode)
 {
 	pImp->open(path, mode);
 }
 
-inline bool AsyncFileBase::isOpen() const
+bool AsyncFileBase::isOpen() const
 {
 	return pImp->isOpen();
 }
 
-inline void AsyncFileBase::cancel()
+void AsyncFileBase::cancel()
 {
 	pImp->cancel();
 }
 
-inline void AsyncFileBase::close()
+void AsyncFileBase::close()
 {
 	pImp->close();
 }

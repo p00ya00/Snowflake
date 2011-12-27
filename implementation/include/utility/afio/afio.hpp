@@ -63,13 +63,7 @@ typedef boost::function2<void,
                          const boost::system::error_code &, 
 						 std::size_t>
         WriteHandler;
-/*
-namespace placeholders
-{
-	typedef boost::asio::placeholders::error error;
-	typedef boost::asio::placeholders::bytes_transferred bytesTransferred;
-}
-*/
+
 }
 }
 

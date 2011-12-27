@@ -35,6 +35,12 @@ void AfioImpThreadpool::asyncWrite(const const_buffers_1 &buff, ReadHandler hand
                                    boost::uint64_t sizeToWrite, boost::uint64_t offset)
 {}
 
+void AfioImpThreadpool::join()
+{}
+
+void AfioImpThreadpool::stop()
+{}
+
 AfioImpThreadpool::~AfioImpThreadpool()
 {}
 

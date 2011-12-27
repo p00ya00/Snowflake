@@ -72,12 +72,11 @@ private:
 		while(1)
 		{
 			queue.pop(task);
-			try
-			{
-				task();
-			}
-			catch(...)
-			{} //swallow!
+			// task() should provide sufficient exception
+			// handling for its statements and calls
+			// otherwise the worker thread executing task()
+			// will exit because of unhandled exception
+			task();
 		}
 	}
 

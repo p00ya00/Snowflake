@@ -2,6 +2,7 @@
 #define SF_AFIO_AFIO_IMP_OVERLAPPED_IO_HPP
 
 #include <utility/afio/afio_imp.hpp>
+#include <utility/afio/afio_service.hpp>
 
 #ifdef  SF_AFIO_USES_OVERLAPPED_IO
 
@@ -58,7 +59,9 @@ public:
                              boost::uint64_t offset
                            );
 
-	std::fstream  &getFileStream() const;
+	static void join();
+
+	static void stop();
 
 	virtual ~AfioImpOverlappedIo();
 
