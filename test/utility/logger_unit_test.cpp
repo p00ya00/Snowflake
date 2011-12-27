@@ -1,4 +1,4 @@
-#define BOOST_TEST_MODULE UTILITY
+#define BOOST_TEST_MODULE UTILITY_LOGGER
 
 //Disabling MSVC's warning about fopen not being secure
 #pragma warning(disable: 4996)
